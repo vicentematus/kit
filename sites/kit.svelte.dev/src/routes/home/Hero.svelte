@@ -4,6 +4,13 @@
 	import background from './svelte-kit-machine.webp?w=1440;960&format=avif;webp;png&picture';
 </script>
 
+<svelte:window
+	on:hashchange={() => {
+		console.log(window.location.hash, 'location');
+		console.log($page.url.hash, 'store');
+	}}
+/>
+
 <section class="hero">
 	<div class="hero-contents">
 		<div class="hero-text">

@@ -1690,7 +1690,9 @@ export function create_client(app, target) {
 				}
 			});
 
-			addEventListener('hashchange', () => {
+			addEventListener('hashchange', (event) => {
+				const new_url = new URL(event.newURL);
+				const old_url = new URL(event.oldURL);
 				// if the hashchange happened as a result of clicking on a link,
 				// we need to update history, otherwise we have to leave it alone
 				if (hash_navigating) {
@@ -1700,6 +1702,16 @@ export function create_client(app, target) {
 						'',
 						location.href
 					);
+					return;
+				}
+
+				// If the hash is the only thing that changed via user input, update the hash on the store
+				if (new_url.hash != old_url.hash) {
+					console.log('hashchange', new_url, old_url);
+					stores.page.set({ ...page, url: { ...page.url, hash: new_url.hash } });
+					stores.page.notify();
+
+					return;
 				}
 			});
 

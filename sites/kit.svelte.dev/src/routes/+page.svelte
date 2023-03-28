@@ -1,4 +1,6 @@
 <script>
+	import { page } from '$app/stores';
+
 	import { onMount } from 'svelte';
 	import Features from './home/Features.svelte';
 	import Hero from './home/Hero.svelte';
@@ -17,6 +19,7 @@
 		const json = await (await fetch(schema_url)).text();
 		schema = `<script type="application/ld+json">${json}<\/script>`;
 	});
+	$: console.log('SE HA ACTUALIZADO EL HASH', $page.url.hash);
 </script>
 
 <svelte:head>
@@ -60,6 +63,12 @@
 				>free and open source software</a
 			> released under the MIT license.
 		</p>
+
+		<a href="#1">#1</a>
+
+		<a href="#2">#2</a>
+
+		<button on:click={() => console.log($page.url.hash)}>Store es</button>
 	</footer>
 </div>
 
